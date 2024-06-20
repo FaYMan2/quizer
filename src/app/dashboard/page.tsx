@@ -76,10 +76,10 @@ export default function Home() {
           QuizData
         })
       })
-      const {quizID, success} = await res.json()
-      console.log(quizID,success)
+      const {quizId, success} = await res.json()
+      console.log(quizId,success)
       if(success === 'true'){
-        return quizID
+        return quizId
       }
       else{
         return null

@@ -18,6 +18,7 @@ export async function POST(req:Request){
             QuizData : QuizData
         },
     })
+    
     console.log('quiz' + quiz)
     const quizID = q.QuizID
     console.log(quizID + "hi")
