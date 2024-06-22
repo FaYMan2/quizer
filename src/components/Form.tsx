@@ -1,6 +1,6 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Dispatch, SetStateAction, FunctionComponent, FormEvent, FormEventHandler, ChangeEventHandler } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
     inputText : string,
