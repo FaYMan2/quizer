@@ -5,6 +5,8 @@ import Question from "@/components/Question";
 
 export default function QuizClient({QuizData} : {QuizData : JsonValue | null}){
     return (
-        <Question/>
+        <div className="flex flex-col justify-center items-center h-dvh"> 
+            <Question/>
+        </div>
     )
 }

@@ -15,8 +15,6 @@ export default async function quiz({ params } : {params : {QuizID : string}}){
     }
 
     return (
-       <div>
         <QuizClient QuizData = {q.QuizData}/>
-       </div>
     )
 }

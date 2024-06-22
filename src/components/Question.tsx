@@ -1,5 +1,7 @@
 import { Card,CardContent,CardDescription,CardHeader,CardTitle } from "./ui/card"
 import Option from "@/components/Option";
+import { useState } from "react";
+
 
 const  q =  `{
         
@@ -24,9 +26,28 @@ const  q =  `{
     ],
     "question": "What is the name of the spiky-haired protagonist who dreams of becoming the Hokage (leader) in the anime Naruto?"
 }`
+const data = JSON.parse(q)
 
 export default function Question(){
-    const data = JSON.parse(q)
+    const [isCorrect,setIsCorrect] = useState(false)
+    const [isClicked,setIsClicked] = useState(false)
+
+    const handleClick = (event : any) =>{
+      const chosenOption = event.target.id
+      console.log(`chosen option : ${chosenOption} correct option : ${data.answer}`)
+    
+      if (chosenOption === data.answer){
+        setIsCorrect(true)
+        console.log('is correct called : correct option')
+      }
+      else if (chosenOption !== data.answer){
+        setIsCorrect(false)
+        console.log('is correct called : incorrect answer')
+      }
+      setIsClicked(true)
+
+      console.log(`isCorrect : ${isCorrect}, isClicked : ${isClicked}`)
+    }
 
     return(
         <div className="flex justify-center items-center font-sans rounded-xl">
@@ -36,9 +57,10 @@ export default function Question(){
                     <CardDescription className="text-slate-300 text-lg">{data.question}</CardDescription>
                     <CardContent className="grid grid-cols-2 place-items-center">
                         {
-                            data.options.map((option : {optionNumber : string , optionString : string}) =>{
-                                return(
-                                    <Option optionNumber={option.optionNumber} optionString={option.optionString}/>
+                            data.options.map((option : {optionNumber : string , optionString : string}) => {
+                                return(                        
+                                      <Option optionNumber={option.optionNumber} optionString={option.optionString}
+                                        handleClick={handleClick} isClicked={isClicked} isCorrect={isCorrect}/>
                                 )
                             })
                         }
