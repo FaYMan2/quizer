@@ -3,8 +3,8 @@
 
 import Question from "@/components/Question";
 import { Button } from "@/components/ui/button";
+import {useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { use, useState } from "react";
 
 export interface QuizJSON {
     title: string;
@@ -23,13 +23,15 @@ export  interface question {
     optionString: string;
   }
 
-export default function QuizClient({QuizData} : {QuizData : QuizJSON}){
+export default function QuizClient({QuizData,QuizId} : {QuizData : QuizJSON, QuizId : string}){
     const [idx, setIdx] = useState(0);
     const len = QuizData.questions.length;
-    const router = useRouter()
+
     const [isClicked,setIsClicked] = useState(false)
     const [isCorrect,setIsCorrect] = useState(false)
     const [chosenOption,setChosenOption] = useState('')
+    const [Score, setScore] = useState(0)
+    const router = useRouter()
 
     const nextQuestion = () => {
       if (idx < len - 1) {
@@ -38,34 +40,37 @@ export default function QuizClient({QuizData} : {QuizData : QuizJSON}){
         setIsCorrect(false)
         setChosenOption('')
       }
+      if (idx == len - 1){
+        console.log('quiz done')
+        if(QuizId){
+          router.push(`report/${QuizId}`)
+        }
+      }
+
     };
   
-    const prevQuestion = () => {
-      if (idx > 0) {
-        setIdx(idx - 1);
-      }
-    };
 
     return (
 
       <>
-        <div className="flex flex-col justify-center items-center mt-32"> 
-          <Question data={QuizData.questions[idx]} 
+       
+        <div className="flex flex-col justify-center items-center mt-32">
+        <div className="text-xl ">Score : {Score}</div>
+          <Question data={QuizData.questions[idx]}
           idx={idx}
           isClicked={isClicked}
           isCorrect={isCorrect}
           chosenOption={chosenOption}
+          Score={Score}
           setIsClicked={setIsClicked}
           setIsCorrect={setIsCorrect}
-          setChosenOption={setChosenOption}/>
+          setChosenOption={setChosenOption}
+          setScore={setScore}/>
         </div>
-        <div className="flex justify-between">
-            <Button variant={"secondary"} className='mx-2 rounded-xl mt-2 text-lg font-sans'
-            onClick={prevQuestion}
-            disabled={idx == 0}>Previous</Button>
+        <div className="flex justify-end">
             <Button variant={"secondary"} className='mx-2 rounded-xl mt-2 px-6 text-lg font-sans'
             onClick={nextQuestion}
-            disabled={idx == len-1}>Next</Button>
+            >{idx !== len - 1 ? "Next" : "Submit"}</Button>
         </div>
       </>
     )
