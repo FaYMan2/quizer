@@ -1,9 +1,8 @@
 "use client";
 
-
-import Form from "@/components/Form"
+import Form from "@/components/Form";
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const dummydata = `{
     
@@ -59,62 +58,62 @@ const dummydata = `{
       "answer": "2"
     }
   ]
-}`
+}`;
 
 export default function Home() {
-  const router = useRouter()
-  const [inputText, setInputText] = useState('')
+  const router = useRouter();
+  const [inputText, setInputText] = useState("");
 
   const createQuiz = async (QuizData: JSON) => {
     try {
-      const res = await fetch('/api/createQuiz', {
-        method: 'POST',
+      const res = await fetch("/api/createQuiz", {
+        method: "POST",
         headers: {
-          'Content-type': 'application/json'
+          "Content-type": "application/json",
         },
         body: JSON.stringify({
-          QuizData
-        })
-      })
-      const {quizId, success} = await res.json()
-      console.log(quizId,success)
-      if(success === 'true'){
-        return quizId
+          QuizData,
+        }),
+      });
+      const { quizId, success } = await res.json();
+      console.log(quizId, success);
+      if (success === "true") {
+        return quizId;
+      } else {
+        return null;
       }
-      else{
-        return null
-      }
+    } catch (error) {
+      console.error("na ho paya bauji", error);
+      return false;
     }
-    catch (error) {
-      console.error('na ho paya bauji', error)
-      return false
-    }
-  }
+  };
 
   const handleSubmit = async (event: any) => {
-    console.log(inputText)
-    event.preventDefault()
+    console.log(inputText);
+    event.preventDefault();
     if (inputText) {
-      const jsonOBJ = JSON.parse(dummydata)
-      console.log(jsonOBJ)
-      const QuizID = await createQuiz(jsonOBJ)
+      const jsonOBJ = JSON.parse(dummydata);
+      console.log(jsonOBJ);
+      const QuizID = await createQuiz(jsonOBJ);
       if (QuizID) {
-        console.log(QuizID)
-        router.push(`/quiz/${QuizID}`)
+        console.log(QuizID);
+        router.push(`/quiz/${QuizID}`);
+      } else {
+        console.error("lavde lag gaye");
       }
-      else {
-        console.error('lavde lag gaye')
-      }
+    } else {
+      console.log("do nothing");
     }
-    else {
-      console.log("do nothing")
-    }
-  }
+  };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-auto gap-28" >
+    <main className="flex min-h-screen flex-col items-center justify-auto gap-28">
       <h1>Quiz on anything</h1>
-      <Form inputText={inputText} handleSubmit={handleSubmit} setInputText={setInputText} />
+      <Form
+        inputText={inputText}
+        handleSubmit={handleSubmit}
+        setInputText={setInputText}
+      />
     </main>
   );
 }
