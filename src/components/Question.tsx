@@ -21,7 +21,7 @@ export default function Question({
   setIsCorrect,
   setChosenOption,
   setScore,
-}: {
+} : {
   data: question;
   idx: number;
   isCorrect: boolean;

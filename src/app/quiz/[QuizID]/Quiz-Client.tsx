@@ -2,9 +2,9 @@
 
 import Question from "@/components/Question";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import Report from "@/components/Report";
 export interface QuizJSON {
   title: string;
   description: string;
@@ -51,6 +51,18 @@ export default function QuizClient({
     }
   };
 
+  const handleShare = (event : any) => {
+
+  }
+
+  const handleTryAgain = (event : any) => {
+    setIsClicked(false)
+    setIdx(0)
+    setFinish(false)
+    setIsCorrect(false)
+    setScore(0)
+    setChosenOption('')
+  }
   return !isFinished ? (
     <>
       <div className="flex flex-col justify-center items-center mt-32">
@@ -79,6 +91,7 @@ export default function QuizClient({
       </div>
     </>
   ) : (
-    <div>Score : {Score}</div>
+    <Report Score={Score} maxScore={QuizData.questions.length} 
+    handleShare={handleShare} handleTryAgain={handleTryAgain}/> 
   );
 }

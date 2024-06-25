@@ -1,20 +1,26 @@
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Dispatch, SetStateAction } from "react";
+import { Spinner } from "./ui/loader";
+import { motion } from "framer-motion";
 
 type Props = {
   inputText: string;
   setInputText: Dispatch<SetStateAction<string>>;
   handleSubmit: (event: any) => void;
+  isLoading : boolean
 };
 
 export default function Form(props: Props) {
   function inputChange(e: any) {
     props.setInputText(e.target.value);
   }
+
+
   return (
+  !props.isLoading ? 
     <form
-      className="flex bg-secondary rounded-xl gap-6 "
+      className="flex bg-secondary rounded-xl gap-6 w-160 "
       onSubmit={props.handleSubmit}
     >
       <Input
@@ -24,12 +30,15 @@ export default function Form(props: Props) {
         value={props.inputText}
       />
       <Button
-        variant={"destructive"}
+        variant={"link"}
         onClick={props.handleSubmit}
-        className="p-4 m-2 rounded-xl"
+        className="p-4 m-2 rounded-xl bg-secondary"
       >
         Enter
       </Button>
     </form>
-  );
+   : <Spinner className="text-ring" size={'large'}> 
+      <span className="text-primary text-md"> Loading Your Quiz </span>
+    </Spinner>
+  )
 }
