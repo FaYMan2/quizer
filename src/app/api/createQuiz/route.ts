@@ -6,6 +6,9 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 
+
+export const maxDuration = 45;
+export const dynamic = 'force-dynamic';
 export async function POST(req: Request) {
   const { inputText } = await req.json();
   console.log('CREATE API QUIZ CALLED')
