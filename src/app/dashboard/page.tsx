@@ -3,7 +3,9 @@
 import Form from "@/components/Form";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import toast,{Toaster} from 'react-hot-toast'
+import { TypeAnimation } from 'react-type-animation';
+import { Type } from "lucide-react";
 
 export default function Home() {
   const router = useRouter();
@@ -29,7 +31,7 @@ export default function Home() {
         return null;
       }
     } catch (error) {
-      console.error("na ho paya bauji", error);
+      toast.error('Something went wrong please try again')
       setLoading(false)
       return false;
     }
@@ -44,16 +46,30 @@ export default function Home() {
         console.log(QuizID);
         router.push(`/quiz/${QuizID}`);
       } else {
-        console.error("lavde lag gaye");
+        toast.error('Something went wrong please try again')
       }
     } else {
-      console.log("do nothing");
+      toast.error('Empty Input')
     }
   };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-auto gap-28">
-      <h1>Quiz on anything</h1>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
+      <TypeAnimation className="text-xl text-slate-200"
+        sequence={[
+          'Test yourself',
+          1000,
+          'Quiz Yourself',
+          1000
+      ]}
+        repeat={0}
+        cursor = {false}
+     />
+
       <Form
         inputText={inputText}
         handleSubmit={handleSubmit}
