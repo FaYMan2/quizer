@@ -35,6 +35,7 @@ export async function POST(req: Request) {
   })
 
   const chain = JsonPrompt.pipe(model).pipe(parser)
+  console.log('gemini called')
   const data = await chain.invoke({input : inputText})
   console.log('got prompt')
   console.log(data)
