@@ -4,8 +4,8 @@ import { redirect, useRouter } from "next/navigation";
 export default async function Home() {
   const user: User | null = await currentUser();
   const isLoggedin = !!user;
-
-  if (isLoggedin) {
+  // Intentional - to be removed in final commit 
+  if (isLoggedin || true) {
     redirect("/dashboard");
   }
 
