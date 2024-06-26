@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast,{Toaster} from 'react-hot-toast'
 import { TypeAnimation } from 'react-type-animation';
-import { Type } from "lucide-react";
+
 
 export default function Home() {
   const router = useRouter();
@@ -54,20 +54,23 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-auto gap-28">
+    <main className="flex min-h-screen flex-col items-center justify-auto gap-28 m-8 ">
       <Toaster
         position="bottom-center"
         reverseOrder={false}
       />
-      <TypeAnimation className="text-xl text-slate-200"
+      <TypeAnimation className="text-4xl text-slate-200"
         sequence={[
           'Test yourself',
-          1000,
+          750,
           'Quiz Yourself',
-          1000
+          500,
+          'Quiz Yourself on anything',
+          750
       ]}
         repeat={0}
-        cursor = {false}
+        cursor = {true}
+        wrapper={'b'}
      />
 
       <Form

@@ -2,7 +2,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Dispatch, SetStateAction } from "react";
 import { Spinner } from "./ui/loader";
-import { motion } from "framer-motion";
+
 
 type Props = {
   inputText: string;
@@ -20,7 +20,7 @@ export default function Form(props: Props) {
   return (
   !props.isLoading ? 
     <form
-      className="flex bg-secondary rounded-xl gap-6 w-160 "
+      className="flex bg-secondary rounded-xl gap-6 w-160"
       onSubmit={props.handleSubmit}
     >
       <Input
