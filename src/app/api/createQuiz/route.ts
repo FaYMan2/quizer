@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     inputVariables : ['input'],
     template : `
       give a 5 mcq question quiz on topic {input} in json format and send only the JSON with no extra characters
-      dont use quoutes ("",'')
+      return only valid JSON 
       {{
         questions : [
           question : string,
