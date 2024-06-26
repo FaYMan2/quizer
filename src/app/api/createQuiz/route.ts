@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     maxOutputTokens : 2048,
     apiKey : process.env.GOOGLE_API_KEY
   })
+  console.log('model init')
   const parser = new StringOutputParser()
   const JsonPrompt = new PromptTemplate({
     inputVariables : ['input'],
@@ -35,9 +36,10 @@ export async function POST(req: Request) {
 
   const chain = JsonPrompt.pipe(model).pipe(parser)
   const data = await chain.invoke({input : inputText})
-  console.log('GOT JSON')
+  console.log('got prompt')
   console.log(data)
   const QuizData = JSON.parse(data)
+  console.log('GOT JSON')
   const { userId } = getAuth(req as any);
 
   if (!userId) {
