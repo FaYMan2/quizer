@@ -8,7 +8,7 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 
 export async function POST(req: Request) {
   const { inputText } = await req.json();
-
+  console.log('CREATE API QUIZ CALLED')
   const model = new ChatGoogleGenerativeAI({
     model : "gemini-pro",
     maxOutputTokens : 2048,
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
   const chain = JsonPrompt.pipe(model).pipe(parser)
   const data = await chain.invoke({input : inputText})
-    
+  console.log('GOT JSON')
   console.log(data)
   const QuizData = JSON.parse(data)
   const { userId } = getAuth(req as any);
@@ -50,7 +50,7 @@ export async function POST(req: Request) {
       QuizData: QuizData,
     },
   });
-
+  console.log('created data in prisma')
   console.log("quiz" + quiz);
   const quizID = q.QuizID;
   console.log(quizID + "hi");
