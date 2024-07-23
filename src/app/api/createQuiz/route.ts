@@ -80,7 +80,7 @@ export async function POST(req: Request) {
       give a 5 mcq question quiz on topic {input} strictly follow below rules
       1. Give only the JSON
       2. Follow the given JSON fromat strictly 
-      3. Write correct JSON
+      3. Write correct JSON and validate it internally
       {{
         questions : [
           question : string,

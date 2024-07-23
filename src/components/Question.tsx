@@ -53,19 +53,19 @@ export default function Question({
   }, [isClicked, isCorrect, chosenOption]);
 
   return (
-    <div className="flex justify-center items-center font-sans rounded-xl">
+    <div className="flex justify-center items-center font-sans rounded-xl mx-4">
       <Card className="bg-card">
         <CardHeader className="gap-4">
           <CardTitle>{`Q ${idx + 1}`}</CardTitle>
           <CardDescription className="text-slate-300 text-lg">
             {data.question}
           </CardDescription>
-          <CardContent className="grid grid-cols-2 place-items-center">
+          <CardContent className="grid sm:grid-cols-2 place-items-center grid-cols-1 w-full gap-2">
             {data.options.map(
               (option: { optionNumber: string; optionString: string }) => (
                 <motion.div
                   key={option.optionNumber}
-                  className={`flex bg-card justify-center m-2 p-2 w-[350px] items-center border-2 border-ring rounded-xl transition duration-200 
+                  className={`flex bg-card justify-center m-2 p-2 w-full items-center border-2 border-ring rounded-xl transition duration-200 
                                     ${isClicked ? (isCorrect ? (chosenOption === option.optionNumber ? "bg-green-500 text-white" : "hover:bg-primary text-slate-300 hover:text-black hover:opacity-80 cursor-pointer") : chosenOption === option.optionNumber || data.answer === option.optionNumber ? (data.answer === option.optionNumber ? "bg-green-500 text-white" : "bg-red-500 text-white") : "hover:bg-primary text-slate-300 hover:text-black hover:opacity-80 cursor-pointer") : "hover:bg-primary text-slate-300 hover:text-black hover:opacity-80 cursor-pointer"}`}
                   onClick={
                     !isClicked
