@@ -1,16 +1,27 @@
 "use client";
 
 import Form from "@/components/Form";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useRouter } from "next/navigation";
 import toast,{Toaster} from 'react-hot-toast'
 import { TypeAnimation } from 'react-type-animation';
+import { getAuth } from "@clerk/nextjs/server";
 
 
 export default function Home() {
   const router = useRouter();
   const [inputText, setInputText] = useState("");
   const [isLoading,setLoading] = useState(false)
+  
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchAuth() {
+      const { userId } =  getAuth();
+      setUserId(userId);
+    }
+    fetchAuth();
+  }, []);
   const createQuiz = async (inputText: string) => {
     setLoading(true)
     try {
@@ -38,18 +49,27 @@ export default function Home() {
   };
 
   const handleSubmit = async (event: any) => {
-    console.log(inputText);
     event.preventDefault();
-    if (inputText) {
-      const QuizID = await createQuiz(inputText);
-      if (QuizID) {
-        console.log(QuizID);
-        router.push(`/quiz/${QuizID}`);
+    if(userId){
+      console.log(inputText);
+      if (inputText) {  
+        const QuizID = await createQuiz(inputText);
+        if (QuizID) {
+          console.log(QuizID);
+          router.push(`/quiz/${QuizID}`);
+        } else {
+          toast.error('Something went wrong please try again')
+        }
       } else {
-        toast.error('Something went wrong please try again')
+        toast.error('Empty Input')
       }
     } else {
-      toast.error('Empty Input')
+      toast(
+        <span> Please <b>Sign In</b></span>,
+        {
+          icon : <img src = "\warning.png" className="w-[17px] h-[17px]"/>
+        }
+      )
     }
   };
 
