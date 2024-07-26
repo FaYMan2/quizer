@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Report from "@/components/Report";
+import { usePathname } from "next/navigation";
+import toast,{Toaster} from "react-hot-toast";
 export interface QuizJSON {
   title: string;
   description: string;
@@ -37,6 +39,7 @@ export default function QuizClient({
   const [chosenOption, setChosenOption] = useState("");
   const [Score, setScore] = useState(0);
   const [isFinished, setFinish] = useState(false);
+  const pathname = usePathname();
   const router = useRouter();
 
   const nextQuestion = () => {
@@ -51,8 +54,12 @@ export default function QuizClient({
     }
   };
 
-  const handleShare = (event : any) => {
-
+  const handleShare =  (event : any) => {
+    toast.success('copied')
+    const URL = 'https://quizme-olive-two.vercel.app/'
+    const shareUrl = URL + pathname
+    console.log(shareUrl)
+    navigator.clipboard.writeText(shareUrl)
   }
 
   const handleTryAgain = (event : any) => {
@@ -62,6 +69,7 @@ export default function QuizClient({
     setIsCorrect(false)
     setScore(0)
     setChosenOption('')
+    toast.success('GO AHEAD')
   }
   return !isFinished ? (
     <>
@@ -91,7 +99,13 @@ export default function QuizClient({
       </div>
     </>
   ) : (
-    <Report Score={Score} maxScore={QuizData.questions.length} 
-    handleShare={handleShare} handleTryAgain={handleTryAgain}/> 
+    <>
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      />
+      <Report Score={Score} maxScore={QuizData.questions.length} 
+        handleShare={handleShare} handleTryAgain={handleTryAgain}/> 
+    </>
   );
 }

@@ -1,27 +1,18 @@
 "use client";
 
 import Form from "@/components/Form";
-import { useState,useEffect } from "react";
+import { useState,useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import toast,{Toaster} from 'react-hot-toast'
 import { TypeAnimation } from 'react-type-animation';
-import { getAuth } from "@clerk/nextjs/server";
+import { useUser } from "@clerk/nextjs";
 
 
 export default function Home() {
   const router = useRouter();
   const [inputText, setInputText] = useState("");
   const [isLoading,setLoading] = useState(false)
-  
-  const [userId, setUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchAuth() {
-      const { userId } =  getAuth();
-      setUserId(userId);
-    }
-    fetchAuth();
-  }, []);
+  const { user } = useUser();
   const createQuiz = async (inputText: string) => {
     setLoading(true)
     try {
@@ -50,7 +41,7 @@ export default function Home() {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if(userId){
+    if(user){
       console.log(inputText);
       if (inputText) {  
         const QuizID = await createQuiz(inputText);
